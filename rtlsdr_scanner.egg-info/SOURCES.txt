@@ -1,3 +1,4 @@
+COPYING
 MANIFEST.in
 setup.py
 conf/gps.conf
@@ -23,7 +24,6 @@ rtlsdr_scanner/panels.py
 rtlsdr_scanner/plot_3d.py
 rtlsdr_scanner/plot_controls.py
 rtlsdr_scanner/plot_line.py
-rtlsdr_scanner/plot_preview.py
 rtlsdr_scanner/plot_spect.py
 rtlsdr_scanner/plot_status.py
 rtlsdr_scanner/plot_time.py

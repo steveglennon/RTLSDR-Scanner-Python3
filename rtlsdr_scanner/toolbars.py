@@ -144,7 +144,7 @@ class MFStatusbar(wx.StatusBar):
             delta = timedelta(seconds=math.ceil(timeLeft))
             text = '{:.1f}%\n{}'.format(progress, delta)
 
-        self.controls[3].SetValue(progress)
+        self.controls[3].SetValue(int(progress))
         self.controls[3].SetToolTip(self.__format_tooltip(text))
 
     def show_progress(self):
@@ -277,6 +277,7 @@ class NavigationToolbar(NavigationToolbar2WxAgg):
     def __on_check_peaks(self, event):
         peaks = event.IsChecked()
         self.settings.peaks = peaks
+        self.__on_set_peaks(self)
         self.panel.redraw_plot()
 
     def __on_check_fade(self, event):
@@ -406,6 +407,7 @@ class NavigationToolbar(NavigationToolbar2WxAgg):
                               self.settings.peaks,
                               toolId=self.peaksId)
         self.Bind(wx.EVT_TOOL_RCLICKED, self.__on_set_peaks, None, self.peaksId)
+        #self.Bind(wx.EVT_CONTEXT_MENU, self.__on_set_peaks, None, self.peaksId)
 
     def __add_auto_range(self, scaleF, scaleL, scaleT):
         if scaleF:

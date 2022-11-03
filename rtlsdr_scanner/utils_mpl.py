@@ -83,6 +83,10 @@ def utc_to_mpl(utc):
     dt = datetime.datetime.fromtimestamp(local)
     return date2num(dt)
 
+def mpl_add_seconds(dn,s):
+    dt = num2date(dn)
+    dt = dt + datetime.timedelta(seconds=s)
+    return date2num(dt)
 
 def set_date_ticks(axis, auto=True):
     axis.axis_date()

@@ -59,14 +59,17 @@ class ColorBarPlus(ScalarMappable,ColorbarBase):
                  ticks=None,
                  _format=None,
                  drawedges=False,
-                 filled=True,
+                 #filled=True,
                  extendfrac=None,
                  extendrect=False,
                  label='',
                  ):
-        ColorbarBase.__init__(self, ax, cmap, norm, alpha, values, boundaries, orientation, ticklocation, extend,
-                              spacing, ticks, _format, drawedges, filled, extendfrac, extendrect, label)
+        self._norm=norm
+        ColorbarBase.__init__(self, ax, cmap=cmap, norm=norm, alpha=alpha, values=values, boundaries=boundaries, orientation=orientation, ticklocation=ticklocation, extend=extend,
+                              spacing=spacing, ticks=ticks, format=_format, drawedges=drawedges, #filled, 
+                              extendfrac=extendfrac, extendrect=extendrect, label=label)
         ScalarMappable.__init__(self, norm, cmap)
+#        ScalarMappable.norm(self,norm)
 
 
 class Plotter:
@@ -395,7 +398,7 @@ class Plotter:
     def set_bar(self, on):
         self.barBase.ax.set_visible(on)
         if on:
-            self.axes.change_geometry(1, 2, 1)
+            #self.axes.change_geometry(1, 2, 1)
             self.axes.get_subplotspec().get_gridspec().set_width_ratios([9.5, 0.5])
         else:
             self.axes.change_geometry(1, 1, 1)
@@ -424,10 +427,10 @@ class Plotter:
         for collection in self.axes.collections:
             collection.set_cmap(colourMap)
 
-        if get_colours().index(colourMap) < 4:
+        #if get_colours().index(colourMap) < 4:
             self.set_bar(False)
-        else:
-            self.set_bar(True)
+        #else:
+        #    self.set_bar(True)
         self.barBase.set_cmap(colourMap)
 
         try:
@@ -656,9 +659,11 @@ class ThreadPlot(threading.Thread):
 
     def __plot_peaks(self):
         sweep, indices = get_peaks(self.data, self.settings.peaksThres)
-
+        sweep_keys = numpy.fromiter(sweep.keys(), dtype=float)
+        sweep_values = numpy.fromiter(sweep.values(), dtype=float)
         for i in indices:
-            self.axes.plot(sweep.keys()[i], sweep.values()[i],
+#            self.axes.plot(sweep.keys()[i], sweep.values()[i],
+            self.axes.plot(sweep_keys[i], sweep_values[i],
                            linestyle='None',
                            marker='+', markersize=10, color='r',
                            gid='peakThres')

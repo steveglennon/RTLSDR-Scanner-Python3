@@ -81,7 +81,8 @@ class DialogPeakThreshold(wx.Dialog):
         self.settings = settings
 
         textThres = wx.StaticText(self, label='Threshold (dB)')
-        self.ctrlThres = NumCtrl(self, integerWidth=3)
+        self.ctrlThres = wx.SpinCtrl(self, wx.ID_ANY, min=-100, max=40)
+        #self.ctrlThres = NumCtrl(self, integerWidth=4, min=-100, max=40)
         self.ctrlThres.SetValue(settings.peaksThres)
 
         sizerButtons = wx.StdDialogButtonSizer()

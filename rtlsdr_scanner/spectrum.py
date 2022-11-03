@@ -27,7 +27,7 @@ from decimal import Decimal
 from functools import reduce
 from operator import itemgetter, mul
 
-from matplotlib.dates import seconds
+#from matplotlib.dates import seconds
 import numpy
 
 from rtlsdr_scanner.constants import WINFUNC
@@ -226,14 +226,14 @@ def reduce_points(spectrum, limit):
 
 
 def split_spectrum(spectrum):
-    freqs = spectrum.keys()
+    freqs = numpy.fromiter(spectrum.keys(), dtype=float)
     powers = list(map(spectrum.get, freqs))
 
     return freqs, powers
 
 
 def split_spectrum_sort(spectrum):
-    freqs = spectrum.keys()
+    freqs = numpy.fromiter(spectrum.keys(), dtype=float)
     freqs.sort()
     powers = map(spectrum.get, freqs)
 
@@ -261,6 +261,8 @@ def slice_spectrum(spectrum, start, end):
             sweepTemp[f] = p
     return sorted(sweepTemp.items(), key=lambda t: t[0])
 
+def seconds(s):
+    return (s * 1.157407314167358e-05)
 
 def create_mesh(spectrum, mplTime):
     total = len(spectrum)
@@ -336,7 +338,7 @@ def smooth_spectrum(spectrum, winFunc, ratio):
 def smooth_sweep(sweep, winFunc, ratio):
     pos = WINFUNC[::2].index(winFunc)
     function = WINFUNC[1::2][pos]
-    length = len(sweep) / ratio
+    length = int(len(sweep) / ratio)
     if length < 3:
         length = 3
     window = function(length)
@@ -352,12 +354,13 @@ def smooth_sweep(sweep, winFunc, ratio):
 
 
 def get_peaks(spectrum, threshold):
-    sweep = OrderedDict(spectrum[max(spectrum)])
-    for freq, level in sweep.items():
+    sweep = OrderedDict(spectrum[max(spectrum)]) # .copy() or runtime error OrderedDict mutated during iteration
+    sweepc = sweep.copy()
+    for freq, level in sweepc.items():
         if level < threshold:
             del sweep[freq]
 
-    indices = (numpy.diff(numpy.sign(numpy.diff(sweep.values()))) < 0).nonzero()[0] + 1
+    indices = (numpy.diff(numpy.sign(numpy.diff(numpy.fromiter(sweep.values(), dtype=float)))) < 0).nonzero()[0] + 1
     return sweep, indices
 
 

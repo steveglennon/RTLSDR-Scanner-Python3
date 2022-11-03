@@ -221,7 +221,7 @@ class DialogPrefs(wx.Dialog):
         self.checkAlert.SetToolTip('Play alert when level exceeded')
         self.Bind(wx.EVT_CHECKBOX, self.__on_alert, self.checkAlert)
         self.spinLevel = wx.SpinCtrl(self, wx.ID_ANY, min=-100, max=20)
-        self.spinLevel.SetValue(settings.alertLevel)
+        self.spinLevel.SetValue(int(settings.alertLevel))
         self.spinLevel.Enable(settings.alert)
         self.spinLevel.SetToolTip('Alert threshold')
         textBackground = wx.StaticText(self, label='Background colour')
@@ -235,20 +235,20 @@ class DialogPrefs(wx.Dialog):
         self.colourBar = PanelColourBar(self, settings.colourMap)
         self.checkPoints = wx.CheckBox(self, wx.ID_ANY,
                                        "Limit points")
-        self.checkPoints.SetValue(settings.pointsLimit)
+        self.checkPoints.SetValue(int(settings.pointsLimit))
         self.checkPoints.SetToolTip('Limit the resolution of plots')
         self.Bind(wx.EVT_CHECKBOX, self.__on_points, self.checkPoints)
         self.spinPoints = wx.SpinCtrl(self, wx.ID_ANY, min=1000, max=100000)
         self.spinPoints.Enable(settings.pointsLimit)
-        self.spinPoints.SetValue(settings.pointsMax)
+        self.spinPoints.SetValue(int(settings.pointsMax))
         self.spinPoints.SetToolTip('Maximum number of points to plot_line')
         textDpi = wx.StaticText(self, label='Export DPI')
         self.spinDpi = wx.SpinCtrl(self, wx.ID_ANY, min=72, max=6000)
-        self.spinDpi.SetValue(settings.exportDpi)
+        self.spinDpi.SetValue(int(settings.exportDpi))
         self.spinDpi.SetToolTip('DPI of exported images')
         self.checkTune = wx.CheckBox(self, wx.ID_ANY,
                                      "Tune SDR#")
-        self.checkTune.SetValue(settings.clickTune)
+        self.checkTune.SetValue(int(settings.clickTune))
         self.checkTune.SetToolTip('Double click plot_line to tune SDR#')
         textPlugin = HyperlinkCtrl(self, wx.ID_ANY,
                                    label="(Requires plugin)",
@@ -262,12 +262,12 @@ class DialogPrefs(wx.Dialog):
                                           'Retain previous scans')
         self.radioRetain.SetToolTip('Can be slow')
         self.Bind(wx.EVT_RADIOBUTTON, self.__on_radio, self.radioRetain)
-        self.radioRetain.SetValue(settings.retainScans)
+        self.radioRetain.SetValue(int(settings.retainScans))
 
         textMaxScans = wx.StaticText(self, label="Max scans")
         self.spinCtrlMaxScans = wx.SpinCtrl(self)
         self.spinCtrlMaxScans.SetRange(1, 5000)
-        self.spinCtrlMaxScans.SetValue(settings.retainMax)
+        self.spinCtrlMaxScans.SetValue(int(settings.retainMax))
         self.spinCtrlMaxScans.SetToolTip('Maximum previous scans'
                                          ' to display')
 
@@ -388,7 +388,7 @@ class DialogAdvPrefs(wx.Dialog):
 
         textOverlap = wx.StaticText(self, label='PSD Overlap (%)')
         self.slideOverlap = wx.Slider(self, wx.ID_ANY,
-                                      settings.overlap * 100,
+                                      int(settings.overlap * 100),
                                       0, 75,
                                       style=wx.SL_LABELS)
         self.slideOverlap.SetToolTip('Power spectral density'

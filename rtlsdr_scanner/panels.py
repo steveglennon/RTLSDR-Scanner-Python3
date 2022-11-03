@@ -658,7 +658,7 @@ class PanelLine(wx.Panel):
         dc.SetBackground(brush)
 
         dc.Clear()
-        dc.DrawLine(0, height / 2., width, height / 2.)
+        dc.DrawLine(0, int(height / 2.), int(width), int(height / 2.))
 
 
 class PanelMeasure(wx.Panel):
@@ -761,11 +761,11 @@ class PanelMeasure(wx.Panel):
         for _desc, (_row, col) in self.locsDesc.items():
             self.grid.AutoSizeColumn(col)
         for col in [1, 5, 14, 18]:
-            self.grid.SetColSize(col, widthMHz)
+            self.grid.SetColSize(col, int(widthMHz))
             for row in range(self.grid.GetNumberRows()):
                 self.grid.SetCellFont(row, col, font)
         for col in [6, 10]:
-            self.grid.SetColSize(col, widthdB)
+            self.grid.SetColSize(col, int(widthdB))
             for row in range(self.grid.GetNumberRows()):
                 self.grid.SetCellFont(row, col, font)
         for _desc, (_row, col) in self.locsCheck.items():

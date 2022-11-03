@@ -174,6 +174,7 @@ class FrameMain(wx.Frame):
         self.SetStatusBar(self.status)
 
         add_colours()
+        self.SetSize(640,480)
         self.__create_toolbars()
         self.__create_menu()
         self.__create_popup_menu()

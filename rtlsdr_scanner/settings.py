@@ -46,7 +46,7 @@ class Settings:
 
         self.annotate = True
         self.peaks = False
-        self.peaksThres = -30
+        self.peaksThres = -40
 
         self.retainScans = True
         self.retainMax = 20
