@@ -45,7 +45,6 @@ from rtlsdr_scanner.spectrum import Measure, Extent, smooth_spectrum, \
     diff_spectrum, delta_spectrum, get_peaks
 from rtlsdr_scanner.utils_mpl import get_colours
 
-
 class ColorBarPlus(ScalarMappable,ColorbarBase):
     def __init__(self, ax, cmap=None,
                  norm=None,
@@ -398,7 +397,7 @@ class Plotter:
     def set_bar(self, on):
         self.barBase.ax.set_visible(on)
         if on:
-            #self.axes.change_geometry(1, 2, 1)
+            self.axes.change_geometry(1, 2, 1)
             self.axes.get_subplotspec().get_gridspec().set_width_ratios([9.5, 0.5])
         else:
             self.axes.change_geometry(1, 1, 1)
@@ -427,10 +426,10 @@ class Plotter:
         for collection in self.axes.collections:
             collection.set_cmap(colourMap)
 
-        #if get_colours().index(colourMap) < 4:
+        if get_colours().index(colourMap) < 4:
             self.set_bar(False)
-        #else:
-        #    self.set_bar(True)
+        else:
+            self.set_bar(True)
         self.barBase.set_cmap(colourMap)
 
         try:
@@ -697,8 +696,10 @@ class ThreadPlot(threading.Thread):
         levels = []
 
         if len(points):
-            prev = next(iter(points))
-            for point in points:
+            # Make a copy to avoid change to odict while iterating
+            points_c = list(points)
+            prev = next(iter(points_c))
+            for point in points_c:
                 segment = [prev, point]
                 segments.append(segment)
                 levels.append((point[1] + prev[1]) / 2.0)
