@@ -277,7 +277,8 @@ class NavigationToolbar(NavigationToolbar2WxAgg):
     def __on_check_peaks(self, event):
         peaks = event.IsChecked()
         self.settings.peaks = peaks
-        self.__on_set_peaks(self)
+        if peaks:
+            self.__on_set_peaks(self)
         self.panel.redraw_plot()
 
     def __on_check_fade(self, event):
