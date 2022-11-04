@@ -543,7 +543,7 @@ class PanelGraphCompare(wx.Panel):
         self.axesDiff.relim()
 
     def __plot_diff(self):
-        diff = set()
+        diff = {}
         intersections = 0
 
         if self.spectrum1 is not None and self.spectrum2 is not None:

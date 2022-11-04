@@ -431,7 +431,7 @@ class FrameMain(wx.Frame):
         dlg = wx.FileDialog(self, "Open a scan", self.settings.dirScans,
                             self.filename,
                             File.get_type_filters(File.Types.SAVE),
-                            wx.ID_OPEN)
+                            style=wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             self.open(dlg.GetDirectory(), dlg.GetFilename())
         dlg.Destroy()
@@ -443,7 +443,7 @@ class FrameMain(wx.Frame):
         dlg = wx.FileDialog(self, "Merge a scan", self.settings.dirScans,
                             self.filename,
                             File.get_type_filters(File.Types.SAVE),
-                            wx.FD_OPEN)
+                            style=wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             self.__merge(dlg.GetDirectory(), dlg.GetFilename())
         dlg.Destroy()

@@ -235,7 +235,7 @@ def split_spectrum(spectrum):
 def split_spectrum_sort(spectrum):
     freqs = numpy.fromiter(spectrum.keys(), dtype=float)
     freqs.sort()
-    powers = map(spectrum.get, freqs)
+    powers = list(map(spectrum.get, freqs))
 
     return freqs, powers
 

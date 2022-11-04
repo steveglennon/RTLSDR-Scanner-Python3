@@ -197,6 +197,9 @@ class DialogCompare(wx.Dialog):
 
         return '{} MHz\n{}     dB/Hz'.format(freq, level)
 
+    def GetStatusBar(self):
+        return None
+
 
 class DialogSmooth(wx.Dialog):
     POLL = 250
