@@ -251,7 +251,7 @@ def slice_spectrum(spectrum, start, end):
     if min(sweep) > start or max(sweep) < end:
         length = len(spectrum)
         if length > 1:
-            sweep = spectrum.values()[length - 2]
+            sweep = numpy.fromIter(spectrum.values(), dtype=float)[length - 2]
         else:
             return None
 
@@ -306,7 +306,7 @@ def sort_spectrum(spectrum):
 def diff_spectrum(spectrum):
     data = OrderedDict()
     for timeStamp, sweep in spectrum.items():
-        diff = numpy.diff(sweep.values())
+        diff = numpy.diff(numpy.fromiter(sweep.values(), dtype=float))
         data[timeStamp] = OrderedDict(zip(sweep.keys(), diff))
 
     return data
@@ -314,9 +314,10 @@ def diff_spectrum(spectrum):
 
 def delta_spectrum(spectrum):
     data = OrderedDict()
-    if len(spectrum) > 1:
-        _t, baseline = spectrum.items()[0]
-        for timeStamp, sweep in spectrum.items()[1:]:
+    spectrum_a = numpy.fromiter(spectrum.items(), dtype=tuple)
+    if len(spectrum_a) > 1:
+        _t, baseline = spectrum_a[0]
+        for timeStamp, sweep in spectrum_a[1:]:
             delta = [(freq, sweep[freq] - baseline.get(freq, 0))
                      for freq in sweep.keys()]
             data[timeStamp] = OrderedDict(delta)
