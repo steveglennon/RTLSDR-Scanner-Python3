@@ -33,6 +33,7 @@ from matplotlib.colors import LinearSegmentedColormap, Normalize
 from matplotlib.dates import date2num, AutoDateLocator, AutoDateFormatter, \
     DateFormatter, MinuteLocator
 from matplotlib.image import pil_to_array
+import matplotlib.pyplot as plt
 
 
 def add_colours():
@@ -63,11 +64,17 @@ def add_colours():
     cm.register_cmap(name=' Pure Blue', cmap=bMap)
 
 
+#def get_colours():
+#    colours = [colour for colour in cm.cmap_d]
+#    colours.sort()
+#    return colours
+
 def get_colours():
-    colours = [colour for colour in cm.cmap_d]
+    colours = []
+    for cmap_id in plt.colormaps():
+        colours.append(cmap_id)
     colours.sort()
     return colours
-
 
 def find_artists(figure, gid):
     return figure.findobj(lambda x: x.get_gid() == gid)
